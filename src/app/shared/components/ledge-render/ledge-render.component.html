@@ -1,0 +1,37 @@
+<div *ngFor="let token of markdownData" class="markdown-reporter markdown">
+  <div *ngIf="token.type === 'chart'">
+    <div class="charts">
+      <component-markdown-chart [data]="token.data"></component-markdown-chart>
+    </div>
+  </div>
+  <div *ngIf="token.type === 'table'">
+    <table>
+      <thead>
+      <tr>
+        <th *ngFor="let h of token.header">{{h}}</th>
+      </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of token.cells">
+          <th *ngFor="let cell of row">{{cell}}</th>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div *ngIf="token.type === 'paragraph'">
+    <div class="language-{{token.lang}}">
+      {{token.text}}
+    </div>
+  </div>
+  <div *ngIf="token.type === 'heading'">
+    <h1 *ngIf="token.depth === 1">{{token.text}}</h1>
+    <h2 *ngIf="token.depth === 2">{{token.text}}</h2>
+    <h3 *ngIf="token.depth === 3">{{token.text}}</h3>
+    <h4 *ngIf="token.depth === 4">{{token.text}}</h4>
+    <h5 *ngIf="token.depth === 5">{{token.text}}</h5>
+    <h6 *ngIf="token.depth === 6">{{token.text}}</h6>
+  </div>
+  <div *ngIf="token.type === 'code'">
+    <p>{{token.text}}</p>
+  </div>
+</div>

@@ -3,7 +3,7 @@ import marked from 'marked/lib/marked';
 import { zip } from 'lodash-es';
 
 interface ProcessTable {
-  headers: string[];
+  header: string[];
   cells: string[][];
 }
 
@@ -16,7 +16,7 @@ export class ProcessTableComponent implements OnInit {
   @Input()
   tableValue: string;
   processTable: ProcessTable = {
-    headers: [],
+    header: [],
     cells: []
   };
   headerSize = 0;
@@ -32,10 +32,10 @@ export class ProcessTableComponent implements OnInit {
   buildData(tokens: marked.Token[]) {
     for (const token of tokens) {
       if (token.type === 'table') {
-        this.processTable.headers = token.header;
+        this.processTable.header = token.header;
         this.processTable.cells = this.transpose(token.cells);
 
-        this.headerSize = this.processTable.headers.length;
+        this.headerSize = this.processTable.header.length;
       }
     }
   }

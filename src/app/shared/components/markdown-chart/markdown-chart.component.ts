@@ -21,9 +21,14 @@ export class MarkdownChartComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     const myChart = echarts.init(this.reporter.nativeElement);
+    console.log(this.data);
     const builderJson = this.data.chartData;
     const sortData = Object.keys(builderJson).map(key => builderJson[key]).sort((a, b) => a.value - b.value);
-    myChart.setOption({
+    myChart.setOption(this.buildBarChartOption(sortData) as any);
+  }
+
+  private buildBarChartOption(sortData: any) {
+    return {
       tooltip: {},
       title: [{
         text: this.data.title,
@@ -53,7 +58,6 @@ export class MarkdownChartComponent implements OnInit, AfterViewInit {
           }
         }
       }]
-    });
+    };
   }
-
 }
