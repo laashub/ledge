@@ -7,10 +7,10 @@
     "declaration": false,
     "downlevelIteration": true,
     "experimentalDecorators": true,
-    "module": "es2015",
+    "module": "esnext",
     "moduleResolution": "node",
     "importHelpers": true,
-    "target": "es5",
+    "target": "es2015",
     "allowSyntheticDefaultImports": true,
     "typeRoots": [
       "node_modules/@types"
@@ -18,7 +18,13 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "ledge-render": [
+        "dist/ledge-render/ledge-render",
+        "dist/ledge-render"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,

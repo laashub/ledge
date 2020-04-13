@@ -1,4 +1,4 @@
-<div class="path">
+<div class="app-path">
   <div class="header markdown">
     <h3>Path to Production</h3>
   </div>
@@ -8,14 +8,16 @@
       <span></span>
       <span class="spacer"></span>
       <div class="right">
-        <button color="primary" mat-raised-button (click)="addColumn()">Add</button>
+        <button color="warn" mat-raised-button (click)="resetAll()">Reset</button>
         <span class="spacer">&nbsp;</span>
-        <button color="accent" mat-raised-button (click)="removeColumn()">Remove</button>
+        <button color="accent" mat-raised-button (click)="removeColumn()" [disabled]="maxLength === 0">Remove</button>
+        <span class="spacer">&nbsp;</span>
+        <button color="primary" mat-raised-button (click)="addColumn()">Add</button>
       </div>
     </mat-toolbar-row>
   </mat-toolbar>
 
-  <div class="page">
+  <div class="path-page">
     <div class="path">
       <div id="pipe-header">
         <div class="pipe-header" *ngFor="let pipe of pipeData;let i = index" id="{{i}}_header"
@@ -24,7 +26,7 @@
         </div>
       </div>
       <div class='wrapper' id="pipe">
-        <div class='container'
+        <div class='path-container'
              *ngFor="let pipe of pipeData;let i = index"
              id="{{i}}_pipe"
              dragula="ITEMS"

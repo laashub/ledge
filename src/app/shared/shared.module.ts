@@ -1,21 +1,15 @@
-import {NgModule, SecurityContext} from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { NgModule, SecurityContext } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { MarkdownRenderComponent } from './components/markdown-render/markdown-render.component';
+import { LedgeRenderModule } from '@ledge-framework/render';
 import { MarkdownModule, MarkedOptions } from 'ngx-markdown';
+import { MarkdownRatingItemComponent } from '../features/rating-radar-chart/markdown-rating-item/markdown-rating-item.component';
+import { MarkdownRatingComponent } from '../features/rating-radar-chart/markdown-rating/markdown-rating.component';
+import { RatingRadarChartComponent } from '../features/rating-radar-chart/rating-radar-chart.component';
+import { MarkdownRenderComponent } from '../features/markdown-render/markdown-render.component';
 import { CustomMaterialModule } from './custom-material.module';
-import { MarkdownRadarChartComponent } from './components/markdown-radar-chart/markdown-radar-chart.component';
-import { MarkdownRatingComponent } from './components/markdown-radar-chart/markdown-rating/markdown-rating.component';
-import { MarkdownRatingItemComponent } from './components/markdown-radar-chart/markdown-rating-item/markdown-rating-item.component';
-import { ProcessTableComponent } from './components/process-table/process-table.component';
-import { LedgeRenderComponent } from './components/ledge-render/ledge-render.component';
-import { MarkdownChartComponent } from './components/markdown-chart/markdown-chart.component';
-import { MarkdownTreeComponent } from './components/markdown-tree/markdown-tree.component';
-import Tocify from './components/markdown-render/tocify';
-import { MobileComponent } from '../presentation/mobile/mobile.component';
-import { ToolsetComponent } from './toolset/toolset.component';
 
 @NgModule({
   imports: [
@@ -25,6 +19,7 @@ import { ToolsetComponent } from './toolset/toolset.component';
     HttpClientModule,
     ReactiveFormsModule,
     CustomMaterialModule,
+    LedgeRenderModule,
     MarkdownModule.forRoot({
       sanitize: SecurityContext.NONE,
       loader: HttpClient,
@@ -40,37 +35,22 @@ import { ToolsetComponent } from './toolset/toolset.component';
           headerPrefix: '',
           headerIds: true,
         },
-      }
-    })
+      },
+    }),
   ],
   declarations: [
     MarkdownRenderComponent,
     MarkdownRatingComponent,
     MarkdownRatingItemComponent,
-    MarkdownRadarChartComponent,
-    ProcessTableComponent,
-    LedgeRenderComponent,
-    MarkdownChartComponent,
-    MarkdownTreeComponent,
-
-    ToolsetComponent
+    RatingRadarChartComponent,
   ],
-  providers: [
-    Tocify,
-  ],
+  providers: [],
   exports: [
     MarkdownRenderComponent,
     MarkdownRatingComponent,
     MarkdownRatingItemComponent,
-    MarkdownRadarChartComponent,
-    ProcessTableComponent,
-    LedgeRenderComponent,
-    MarkdownChartComponent,
-    MarkdownTreeComponent,
-
-    ToolsetComponent
+    RatingRadarChartComponent,
   ],
-  entryComponents: []
+  entryComponents: [],
 })
-export class SharedModule {
-}
+export class SharedModule {}

@@ -1,21 +1,30 @@
 import { Component, OnInit } from '@angular/core';
-import marked from 'marked/lib/marked';
-import MarkdownHelper from '../../shared/components/model/markdown.helper';
-import {MarkdownTaskItemService} from '../../shared/components/markdown-radar-chart/markdown-task-item.service';
-import {MarkdownListModel} from '../../shared/components/model/markdown.model';
-import {StorageMap} from '@ngx-pwa/local-storage';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-maturity',
   templateUrl: './maturity.component.html',
-  styleUrls: ['./maturity.component.scss']
+  styleUrls: ['./maturity.component.scss'],
 })
 export class MaturityComponent implements OnInit {
-  private textValue = `
+  list = [
+    {
+      name: '第二部分：敏捷开发管理',
+      key: 'agile',
+      value: `
+ - [ ] 需求管理
+ - [ ] 过程管理
+ - [ ] 组织模型
+`,
+    },
+    {
+      name: '第三部分：持续交付',
+      key: 'cd',
+      value: `
  -  [ ] 配置管理: 3
    - [ ] 版本控制
    - [ ] 变更管理
- -  [ ] 持续与持续集成: 3
+ -  [ ] 持续构建与持续集成: 3
    - [ ] 构建实践
    - [ ] 持续集成
  -  [ ] 测试管理: 3
@@ -32,96 +41,27 @@ export class MaturityComponent implements OnInit {
  -  [ ] 度量与反馈: 3
    - [ ] 度量指标
    - [ ] 度量驱动改进
+  `,
+    },
+    {
+      name: '第四部分：技术运营',
+      key: 'techops',
+      value: `
+ - [ ] 监控管理
+ - [ ] 事件管理
+ - [ ] 变更管理
+ - [ ] 容量和性能管理
+ - [ ] 成本管理
+ - [ ] 连续性管理
+ - [ ] 用户体验管理
+ - [ ] 运营一体化平台
+      `,
+    },
+  ];
 
-  `;
-
-  tasks: any;
-  private tempValue: string;
-  private taskIndex: number;
-  private indexString: string;
-
-  constructor(private markdownTaskItemService: MarkdownTaskItemService, private storage: StorageMap) {
-
+  constructor(title: Title) {
+    title.setTitle('Ledge DevOps 知识平台 - 成熟度');
   }
 
-  ngOnInit(): void {
-    this.storage.get('maturity.cd').subscribe((value: string) => {
-      if (!!value) {
-        this.textValue = value;
-      }
-
-      this.updateValue(this.textValue);
-    });
-  }
-
-  updateValue(value) {
-    this.textValue = value;
-    const tokens = marked.lexer(this.textValue);
-    this.tasks = MarkdownHelper.markdownToJSON(tokens, this.tasks);
-    this.markdownTaskItemService.setTasks(this.tasks);
-
-    this.storage.set('maturity.cd', this.textValue).subscribe(() => {});
-  }
-
-  updateModel($event: any) {
-    this.taskIndex = 0;
-    this.tempValue = '';
-    this.indexString = '';
-
-    this.taskToMarkdownList($event);
-    this.tempValue = this.tempValue.replace(/\$[A-Za-z0-9_-]{7,14}/g, '');
-    this.updateValue(this.tempValue);
-  }
-
-  taskToMarkdownList(tasks: any, hasChildren = false) {
-    this.taskIndex++;
-
-    for (const task of tasks) {
-      if (task.item) {
-        const item = task.item as MarkdownListModel;
-        if (this.taskIndex > 1) {
-          this.indexString = '  '.repeat(this.taskIndex);
-        }
-        this.tempValue += this.indexString + ` -`;
-        if (item.id) {
-          this.tempValue += ` $${item.id}`;
-        }
-
-        if (item.completed) {
-          this.tempValue += ' [x]';
-        } else {
-          this.tempValue += ' [ ]';
-        }
-
-        if (item.priority) {
-          this.tempValue += ` (${item.priority})`;
-        }
-        if (item.startDate) {
-          this.tempValue += ` ${item.startDate}`;
-        }
-        if (item.endDate) {
-          this.tempValue += ` ${item.endDate}`;
-        }
-        this.tempValue += ` ${item.text}`;
-        if (item.tag) {
-          for (const tag of item.tag) {
-            this.tempValue += ` +${tag}`;
-          }
-        }
-        if (item.context) {
-          this.tempValue += ` @${item.context}`;
-        }
-        this.tempValue += `\n`;
-        this.indexString = '';
-      }
-
-      if (task.childrens) {
-        this.taskToMarkdownList(task.childrens, hasChildren);
-      }
-    }
-
-    if (!hasChildren) {
-      this.taskIndex--;
-    }
-  }
+  ngOnInit(): void {}
 }

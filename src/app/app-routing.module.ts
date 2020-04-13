@@ -1,73 +1,86 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './presentation/home/home.component';
-import { CaseStudyComponent } from './presentation/case-study/case-study.component';
-import { PatternComponent } from './presentation/pattern/pattern.component';
-import { DesignComponent } from './presentation/design/design.component';
-import { PractiseComponent } from './presentation/practise/practise.component';
+import { RouterModule, Routes } from '@angular/router';
+import { AwesomeToolComponent } from './presentation/awesome-tool/awesome-tool.component';
 import { ManualComponent } from './presentation/manual/manual.component';
-import {MaturityComponent} from './presentation/maturity/maturity.component';
-import {ResourcesComponent} from './presentation/resources/resources.component';
-import {ReporterComponent} from './presentation/reporter/reporter.component';
-import {AwesomeToolComponent} from './presentation/awesome-tool/awesome-tool.component';
-import {MobileComponent} from './presentation/mobile/mobile.component';
-import { ToolsetComponent } from './shared/toolset/toolset.component';
+import { MaturityComponent } from './presentation/maturity/maturity.component';
+import { MobileComponent } from './presentation/mobile/mobile.component';
+import { PatternComponent } from './presentation/pattern/pattern.component';
+import { PractiseComponent } from './presentation/practise/practise.component';
+import { ReporterComponent } from './presentation/reporter/reporter.component';
+import { ResourcesComponent } from './presentation/resources/resources.component';
+import { SolutionComponent } from './presentation/solution/solution.component';
+import { ThinkTankComponent } from './presentation/think-tank/think-tank.component';
 
 const routes: Routes = [
-  {path: '', pathMatch: 'full', redirectTo: '/home'},
+  { path: '', pathMatch: 'full', redirectTo: '/home' },
   {
-    path: 'home',
-    component: HomeComponent
-  },
-  {
-    path: 'casestudy',
-    component: CaseStudyComponent
+    path: 'case-study',
+    loadChildren: () =>
+      import('./presentation/case-study/case-study.module').then(
+        (m) => m.CaseStudyModule
+      ),
   },
   {
     path: 'pattern',
-    component: PatternComponent
-  },
-  {
-    path: 'design',
-    component: DesignComponent
+    component: PatternComponent,
   },
   {
     path: 'practise',
-    component: PractiseComponent
+    component: PractiseComponent,
   },
   {
     path: 'manual',
-    component: ManualComponent
+    component: ManualComponent,
   },
   {
     path: 'maturity',
-    component: MaturityComponent
+    component: MaturityComponent,
   },
   {
     path: 'resources',
-    component: ResourcesComponent
+    component: ResourcesComponent,
   },
   {
     path: 'report',
-    component: ReporterComponent
+    component: ReporterComponent,
   },
   {
     path: 'tool',
-    component: AwesomeToolComponent
+    component: AwesomeToolComponent,
   },
   {
     path: 'mobile',
-    component: MobileComponent
+    component: MobileComponent,
   },
   {
-    path: 'toolset',
-    component: ToolsetComponent
-  }
+    path: 'think-tank',
+    component: ThinkTankComponent,
+  },
+  {
+    path: 'solution',
+    component: SolutionComponent,
+  },
+  {
+    path: 'design',
+    loadChildren: () =>
+      import('./presentation/design/design.module').then((m) => m.DesignModule),
+  },
+  {
+    path: 'home',
+    loadChildren: () =>
+      import('./presentation/home/home.module').then((m) => m.HomeModule),
+  },
+  {
+    path: 'helper',
+    loadChildren: () =>
+      import('./presentation/ledge-helper/ledge-helper.module').then(
+        (m) => m.LedgeHelperModule
+      ),
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule {
-}
+export class AppRoutingModule {}

@@ -1,0 +1,35 @@
+<!-- 自适应屏幕动态计算每行个数？ -->
+
+<div class="table-steps" [style.width]="width">
+  <div
+    class="step-row"
+    *ngFor="let arr of headers; let hIndex = index; let lastH=last"
+    [class.step-row-reverse]="(hIndex + 1) % 2 === 0"
+  >
+    <ng-container
+      *ngFor="let headerName of arr; let index = index; let last = last"
+    >
+      <div class="column" [class.step-row-wrap]="index === arr.length - 1">
+        <div
+          class="arrow"
+          *ngIf="isShowIconBeforeCard(data, hIndex, column, index, last, lastH)">
+          <span [class]="index === arr.length - 1 ? 'arrow-down' : 'arrow-left'"></span>
+          <span [class]="index === arr.length - 1 ? 'rect-down' : 'rect-right'"></span>
+        </div>
+        <!-- <h3>{{hIndex * column + index}}-{{ (hIndex * column + index)!==data.header.length-1}}</h3> -->
+        <ledge-card
+          style="height: 100%;"
+          [headerStyle]="config.colors && config.colors[hIndex * column + index]"
+          [data]="{
+            header: headerName,
+            cells: data.cells[hIndex * column + index],
+            index: hIndex * column + index
+          }"></ledge-card>
+        <div class="arrow" *ngIf="(hIndex + 1) % 2 !== 0 && (hIndex * column + index)!==data.header.length-1">
+          <span [class]="index === arr.length - 1 ? 'rect-down' : 'rect-left'"></span>
+          <span [class]="index === arr.length - 1 ? 'arrow-down' : 'arrow-right'"></span>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

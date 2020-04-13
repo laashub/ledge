@@ -2,17 +2,24 @@
   "name": "ledge",
   "version": "0.0.0",
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e",
-    "deploy": "ng deploy --repo=https://github.com/phodal/do.git --cname=devops.phodal.com",
-    "README-postinstall": "The chromedriver version must support the chrome version installed via puppeteer. Chromedriver 76.0.3809.68 supports Chrome 76. See https://chromedriver.chromium.org/downloads for version matching.",
-    "postinstall": "webdriver-manager update --standalone false --gecko false --versions.chrome 76.0.3809.68"
+    "ng": "./node_modules/.bin/ng",
+    "start": "yarn ng serve",
+    "build": "node --max_old_space_size=4096 ./node_modules/.bin/ng build",
+    "build:ci": "node --max_old_space_size=4096 ./node_modules/.bin/ng build --prod",
+    "build:stats": "node --max_old_space_size=4096 ./node_modules/.bin/ng build --stats-json",
+    "analyze": "webpack-bundle-analyzer dist/ledge/stats-es2015.json",
+    "test": "yarn ng test",
+    "test:ci": "yarn ng test --watch=false --progress=false --browsers=ChromeHeadlessCI --codeCoverage",
+    "lint": "yarn ng lint",
+    "commit": "git-cz",
+    "package": "yarn build:ci && yarn scully",
+    "deploy": "yarn package && npx angular-cli-ghpages --repo=https://github.com/phodal/do.git --dir=dist/static --cname=devops.phodal.com",
+    "build:lib": "node --max_old_space_size=4096 ./node_modules/.bin/ng build ledge-render --prod",
+    "publish:lib": "cd dist/ledge-render && npm publish --access=public",
+    "scully": "scully --scanRoutes",
+    "scully:serve": "scully serve"
   },
-  "private": true,
+  "private": false,
   "dependencies": {
     "@angular/animations": "~9.0.3",
     "@angular/cdk": "^9.1.1",
@@ -20,23 +27,32 @@
     "@angular/compiler": "~9.0.3",
     "@angular/core": "~9.0.3",
     "@angular/forms": "~9.0.3",
+    "@angular/localize": "^9.1.0",
     "@angular/material": "^9.1.1",
     "@angular/platform-browser": "~9.0.3",
     "@angular/platform-browser-dynamic": "^9.1.0",
     "@angular/router": "~9.0.3",
+    "@angular/service-worker": "~9.0.3",
+    "@ledge-framework/render": "~0.0.12",
     "@ngx-pwa/local-storage": "^9.0.2",
+    "@ngx-starter-kit/ngx-utils": "^0.0.8",
+    "@scullyio/init": "^0.0.23",
+    "@scullyio/ng-lib": "latest",
+    "@scullyio/scully": "latest",
+    "angular-split": "^3.0.3",
     "core-js": "^3.6.4",
     "d3": "^5.15.0",
     "d3-graphviz": "^3.0.4",
     "dagre-d3": "^0.6.4",
+    "date-fns": "^2.12.0",
     "echarts": "^4.6.0",
     "graphlib-dot": "^0.6.4",
-    "lodash-es": "^4.17.15",
     "marked": "^0.8.0",
     "material-design-icons": "^3.0.1",
     "mermaid": "^8.4.8",
     "ng2-dragula": "^2.1.1",
     "ngx-markdown": "^9.0.0",
+    "ngx-virtual-scroller": "^4.0.3",
     "rxjs": "~6.5.4",
     "shortid": "^2.2.15",
     "tslib": "^1.10.0",
@@ -44,31 +60,64 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.900.4",
+    "@angular-devkit/build-ng-packagr": "~0.900.5",
     "@angular/cli": "~9.0.4",
     "@angular/compiler-cli": "~9.0.3",
     "@angular/language-service": "~9.0.3",
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-conventional": "^8.3.4",
+    "@gammastream/scully-plugin-sitemap": "^0.0.5",
     "@types/d3": "^5.7.2",
     "@types/echarts": "^4.4.3",
     "@types/jasmine": "~3.5.0",
     "@types/jasminewd2": "~2.0.3",
-    "@types/lodash": "^4.14.149",
     "@types/node": "^12.11.1",
     "angular-cli-ghpages": "^0.6.2",
     "codelyzer": "^5.1.2",
+    "cz-conventional-changelog": "3.1.0",
+    "husky": "^4.2.3",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~4.3.0",
-    "karma-chrome-launcher": "~3.1.0",
+    "karma-chrome-launcher": "^3.1.0",
     "karma-coverage-istanbul-reporter": "~2.1.0",
     "karma-jasmine": "~2.0.1",
     "karma-jasmine-html-reporter": "^1.4.2",
-    "protractor": "~5.4.3",
-    "puppeteer": "chrome-76",
+    "lint-staged": ">=10",
+    "ng-packagr": "^9.0.0",
+    "prettier": "^2.0.2",
+    "puppeteer": "^2.1.1",
+    "stylelint": "^13.3.0",
+    "stylelint-config-standard": "^20.0.0",
+    "stylelint-scss": "^3.16.0",
     "ts-node": "~8.3.0",
     "tslint": "~5.18.0",
-    "typescript": "~3.7.5"
+    "typescript": "~3.7.5",
+    "webpack-bundle-analyzer": "^3.6.1",
+    "xmlbuilder": "^15.1.0"
   },
   "browser": {
     "crypto": false
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "yarn run test:ci"
+    }
+  },
+  "lint-staged": {
+    "src/app/**/*.{css,scss}": [
+      "stylelint --syntax=scss",
+      "prettier --parser --write"
+    ],
+    "{src,test}/**/*.ts": [
+      "prettier --write --single-quote"
+    ],
+    "*.{js,css,md}": "prettier --write"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }

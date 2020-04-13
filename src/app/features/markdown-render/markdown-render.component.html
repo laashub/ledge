@@ -1,0 +1,23 @@
+<div *ngIf="showToc">
+  <div class="markdown-toc">
+    <div class="left-drawer" #leftContent>
+      <div class="toc">
+        <ul #toc [class.sticky]="sticky"></ul>
+      </div>
+    </div>
+    <div class="right-content" #render (scroll)="handleScroll($event)">
+      <ledge-render [content]="data" *ngIf="data"></ledge-render>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!showToc" class="no-toc-markdown" #render>
+  <ledge-render [content]="data" *ngIf="data"></ledge-render>
+</div>
+
+<!--Scroll to top-->
+<div class="scroll-to-top" [ngClass]="{'show-scrollTop': windowScrolled}" *ngIf="showScroll">
+  <button mat-fab aria-label="home" (click)="scrollToTop()">
+    <mat-icon>arrow_upward</mat-icon>
+  </button>
+</div>
