@@ -8,8 +8,6 @@ import { PatternComponent } from './presentation/pattern/pattern.component';
 import { PractiseComponent } from './presentation/practise/practise.component';
 import { ReporterComponent } from './presentation/reporter/reporter.component';
 import { ResourcesComponent } from './presentation/resources/resources.component';
-import { SolutionComponent } from './presentation/solution/solution.component';
-import { ThinkTankComponent } from './presentation/think-tank/think-tank.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/home' },
@@ -18,6 +16,34 @@ const routes: Routes = [
     loadChildren: () =>
       import('./presentation/case-study/case-study.module').then(
         (m) => m.CaseStudyModule
+      ),
+  },
+  {
+    path: 'solution',
+    loadChildren: () =>
+      import('./presentation/solution/solution.module').then(
+        (m) => m.SolutionModule
+      ),
+  },
+  {
+    path: 'checklists',
+    loadChildren: () =>
+      import('./presentation/checklists/checklists.module').then(
+        (m) => m.ChecklistsModule
+      ),
+  },
+  {
+    path: 'partners',
+    loadChildren: () =>
+      import('./presentation/partners/partners.module').then(
+        (m) => m.PartnersModule
+      ),
+  },
+  {
+    path: 'think-tank',
+    loadChildren: () =>
+      import('./presentation/think-tank/think-tank.module').then(
+        (m) => m.ThinkTankModule
       ),
   },
   {
@@ -51,14 +77,6 @@ const routes: Routes = [
   {
     path: 'mobile',
     component: MobileComponent,
-  },
-  {
-    path: 'think-tank',
-    component: ThinkTankComponent,
-  },
-  {
-    path: 'solution',
-    component: SolutionComponent,
   },
   {
     path: 'design',

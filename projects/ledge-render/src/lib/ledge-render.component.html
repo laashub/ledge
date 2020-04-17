@@ -54,8 +54,16 @@
       <ledge-dev-process [data]="item.data" [config]="item.config"></ledge-dev-process>
     </div>
 
-    <div *ngSwitchCase="'tech-data'">
+    <div *ngSwitchCase="'tech-radar'">
       <ledge-tech-radar [data]="item.data" [config]="item.config"></ledge-tech-radar>
+    </div>
+
+    <div *ngSwitchCase="'kanban'">
+      <ledge-kanban [data]="item.data" [config]="item.config"></ledge-kanban>
+    </div>
+
+    <div *ngSwitchCase="'checklist'">
+      <ledge-checklist [data]="item.data" [config]="item.config"></ledge-checklist>
     </div>
 
     <div *ngSwitchCase="'table'">
@@ -67,7 +75,7 @@
         </thead>
         <tbody>
         <tr *ngFor="let row of item.cells">
-          <td *ngFor="let cell of row">{{cell}}</td>
+          <td *ngFor="let cell of row" [innerHTML]="cell" ></td>
         </tr>
         </tbody>
       </table>

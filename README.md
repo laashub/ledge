@@ -6,6 +6,10 @@
 
 在线使用：[https://devops.phodal.com/](https://devops.phodal.com/)
 
+国内服务器（不定期同步）：
+
+1. 腾讯云云开发： [https://ledge.wdsm.io/](https://ledge.wdsm.io/)
+
 Ledge （from Know-Ledge，意指承载物）知识和工具平台，是我们基于在 ThoughtWorks 进行的一系列 DevOps 实践、敏捷实践、软件开发与测试、精益实践提炼出来的知识体系。它包含了各种最佳实践、原则与模式、操作手册、度量、工具，用于帮助您的企业在数字化时代更好地前进，还有 DevOps 转型。
 
 ![CI](https://github.com/phodal/ledge/workflows/CI/badge.svg)
@@ -107,6 +111,8 @@ todo: fix Angular elements bug
   - process-table。带流程的图表
   - process-step。带流程的图表 2
   - process-card。卡片式流程
+  - dev-process。工具 Logo 可视化
+- checklist。检查清单
 - <del>mermaid。使用 mermaid 可视化</del>
 - <del>webcomponents。调用 WebComponents 组件</del>
 - 工具
@@ -130,17 +136,33 @@ config: {"type": "slider"}
 
 ## Todo
 
-- [ ] 更多的度量内容
-  - [ ] 监控等
-- [ ] 更多的 DevOps 报告
-- [x] 重构 markdown render
+### 1.0 It works
+
+- [x] 更多的度量内容
+  - [x] 监控等
+- [x] 更多的 DevOps 报告
 - [ ] 单元测试
-  - [ ] 考虑一下 E2E 测试方案
-  - [ ] 补充 markdown render 旧的单元测试
-- [ ] 完善 toolset
+  - [x] 考虑一下 E2E 测试方案
+- [x] 完善 toolset
   - [x] slider
   - [x] line-chart
-- [ ] 提取 markdown 文档化系统
+- [x] 重构 markdown render
+- [x] I18N support
+
+### 2.0 Toolset
+
+- [ ] Ledge Framework
+- [ ] workflow design: https://github.com/elsa-workflows/elsa-designer
+- [ ] Interactive DevOps Design
+  - [ ] Fluent DevOps
+  - [ ] [Health Radar](https://www.scaledagileframework.com/blog/assess-your-devops-health-with-the-safe-devops-radar/)
+- [ ] BizDevOps
+- [ ] I18N
+  - [ ] EN
+
+### 3.0 Ledge
+
+- [ ] Ledge as Code
 
 ## Inspired by
 
@@ -148,14 +170,17 @@ Fluency model:
 
 - [http://agilefluency.org/](http://agilefluency.org/)
 
-Periodic based on:
+and:
 
-- [https://stackblitz.com/edit/ng-periodic-table](https://stackblitz.com/edit/ng-periodic-table)
 - [https://www.nexthink.com/periodic-table/](https://www.nexthink.com/periodic-table/)
 
 others see in the Code.
 
 ## License
+
+- Periodic based on:[https://stackblitz.com/edit/ng-periodic-table](https://stackblitz.com/edit/ng-periodic-table)
+- Tech Radar based on: [https://cofinpro.github.io/Tech-Radar/](https://cofinpro.github.io/Tech-Radar/))
+- Kanban based on: https://github.com/Devstackr/kanban-angular-layout
 
 [![Phodal's Idea](http://brand.phodal.com/shields/idea-small.svg)](http://ideas.phodal.com/)
 

@@ -243,6 +243,10 @@ export class LedgeRenderComponent implements OnInit, OnChanges {
         break;
       case 'toolset':
         const json = LedgeMarkdownConverter.toJson(codeBlock.text);
+        if (json.config === undefined) {
+          return;
+        }
+
         const toolType = json.config.type;
         this.markdownData.push({
           type: 'toolset',
@@ -297,9 +301,25 @@ export class LedgeRenderComponent implements OnInit, OnChanges {
       case 'tech-radar':
         const techRadarData = LedgeMarkdownConverter.toJson(codeBlock.text);
         this.markdownData.push({
-          type: 'dev-process',
+          type: 'tech-radar',
           data: techRadarData.lists[0].children,
           config: techRadarData.config,
+        });
+        break;
+      case 'kanban':
+        const kanbanData = LedgeMarkdownConverter.toJson(codeBlock.text);
+        this.markdownData.push({
+          type: 'kanban',
+          data: kanbanData.lists[0].children,
+          config: kanbanData.config,
+        });
+        break;
+      case 'checklist':
+        const checklistData = LedgeMarkdownConverter.toJson(codeBlock.text);
+        this.markdownData.push({
+          type: 'checklist',
+          data: checklistData.lists[0].children,
+          config: checklistData.config,
         });
         break;
       default:

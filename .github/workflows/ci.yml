@@ -56,16 +56,3 @@ jobs:
           flags: unittests
           name: codecov-umbrella
           fail_ci_if_error: false
-
-      - name: Build Scully
-        run: |
-          npx scully --showGuessError --host='0.0.0.0'
-#        continue-on-error: true
-
-      - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@releases/v3
-        with:
-          ACCESS_TOKEN: ${{ secrets.SuperSecret }}
-          BRANCH: gh-pages # The branch the action should deploy to.
-          REPOSITORY_NAME: "phodal/do"
-          FOLDER: dist/static

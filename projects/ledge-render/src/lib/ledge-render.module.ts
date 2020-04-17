@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LedgeBarChartComponent } from './chart/ledge-bar-chart/ledge-bar-chart.component';
 import { LedgeGraphvizComponent } from './chart/ledge-graphviz/ledge-graphviz.component';
 import { LedgeMindmapComponent } from './chart/ledge-mindmap/ledge-mindmap.component';
@@ -18,6 +18,11 @@ import { LedgePieComponent } from './chart/ledge-pie/ledge-pie.component';
 import { LedgeDevProcessComponent } from './components/ledge-dev-process/ledge-dev-process.component';
 import { VirtualScrollerModule } from 'ngx-virtual-scroller';
 import { LedgeTechRadarComponent } from './chart/ledge-tech-radar/ledge-tech-radar.component';
+import { LedgeKanbanComponent } from './components/ledge-kanban/ledge-kanban.component';
+import { ComponentTodoComponent } from './components/component-todo/component-todo.component';
+import { ComponentChecklistComponent } from './components/component-checklist/component-checklist.component';
+import { LedgeStorageService } from './services/ledge-storage.service';
+import { LedgeChecklistComponent } from './components/ledge-checklist/ledge-checklist.component';
 
 const LedgeComponents = [
   LedgeRenderComponent,
@@ -34,7 +39,12 @@ const LedgeComponents = [
   LedgeTableStepComponent,
   LedgePieComponent,
   LedgeDevProcessComponent,
-  LedgeTechRadarComponent
+  LedgeTechRadarComponent,
+  LedgeKanbanComponent,
+  LedgeChecklistComponent,
+
+  ComponentTodoComponent,
+  ComponentChecklistComponent
 ];
 
 
@@ -44,10 +54,15 @@ const LedgeComponents = [
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     CustomMaterialModule,
     VirtualScrollerModule,
   ],
+  providers: [LedgeStorageService],
   exports: [
-    LedgeRenderComponent]
+    LedgeRenderComponent,
+    ComponentChecklistComponent
+  ]
 })
-export class LedgeRenderModule { }
+export class LedgeRenderModule {
+}

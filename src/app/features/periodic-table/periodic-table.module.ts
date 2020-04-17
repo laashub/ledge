@@ -4,9 +4,10 @@ import { PeriodicTableComponent } from './periodic-table/periodic-table.componen
 import { AtomComponent } from './atom/atom.component';
 import { AtomDetailsComponent } from './atom-details/atom-details.component';
 import { AtomDialogComponent } from './atom-dialog/atom-dialog.component';
-import { AppPhaseComponent } from './app-phase/app-phase.component';
-import { AppWikiComponent } from './app-wiki/app-wiki.component';
+import { AtomCategoryComponent } from './atom-category/atom-category.component';
 import { CustomMaterialModule } from '../../shared/custom-material.module';
+import { HttpClientModule } from '@angular/common/http';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -14,17 +15,22 @@ import { CustomMaterialModule } from '../../shared/custom-material.module';
     AtomComponent,
     AtomDetailsComponent,
     AtomDialogComponent,
-    AppPhaseComponent,
-    AppWikiComponent,
+    AtomCategoryComponent,
   ],
   exports: [
     PeriodicTableComponent,
     AtomComponent,
     AtomDetailsComponent,
     AtomDialogComponent,
-    AppPhaseComponent,
-    AppWikiComponent,
+    AtomCategoryComponent,
   ],
-  imports: [CommonModule, CustomMaterialModule],
+  imports: [
+    CommonModule,
+    CustomMaterialModule,
+    HttpClientModule,
+    TranslateModule.forChild({
+      isolate: false,
+    }),
+  ],
 })
 export class PeriodicTableModule {}
